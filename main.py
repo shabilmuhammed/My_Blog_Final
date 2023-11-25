@@ -5,7 +5,7 @@ from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Table, Column, Integer, ForeignKey,desc
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from forms import *
 from flask_gravatar import Gravatar
@@ -87,7 +87,7 @@ def admin_only(f):
 
 @app.route('/')
 def get_all_posts():
-    posts = BlogPost.query.all()
+    posts = BlogPost.query.order_by(desc(BlogPost.id))
     return render_template("index.html", all_posts=posts)
 
 
